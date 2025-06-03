@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+            <title>絵画風変換アプリ</title>
+                <style>
+                        body { text-align: center; font-family: Arial, sans-serif; }
+                                canvas { max-width: 100%; margin-top: 10px; }
+                                        #imageInput { margin-top: 20px; }
+                                            </style>
+                                            </head>
+                                            <body>
+                                                <h2>絵画風変換アプリ</h2>
+                                                    <input type="file" id="imageInput" accept="image/*">
+                                                        <canvas id="canvas"></canvas>
+
+                                                            <script>
+                                                                    document.getElementById("imageInput").addEventListener("change", function(event) {
+                                                                                const file = event.target.files[0];
+                                                                                            if (!file) return;
+
+                                                                                                        const reader = new FileReader();
+                                                                                                                    reader.onload = function(e) {
+                                                                                                                                    const img = new Image();
+                                                                                                                                                    img.onload = function() {
+                                                                                                                                                                        const canvas = document.getElementById("canvas");
+                                                                                                                                                                                            const ctx = canvas.getContext("2d");
+                                                                                                                                                                                                                canvas.width = img.width;
+                                                                                                                                                                                                                                    canvas.height = img.height;
+                                                                                                                                                                                                                                                        ctx.drawImage(img, 0, 0);
+
+                                                                                                                                                                                                                                                                            // 絵画風フィルター (簡易的なエフェクト)
+                                                                                                                                                                                                                                                                                                ctx.globalCompositeOperation = "soft-light";
+                                                                                                                                                                                                                                                                                                                    ctx.fillStyle = "rgba(255, 255, 153, 0.5)";
+                                                                                                                                                                                                                                                                                                                                        ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+                                                                                                                                                                                                                                                                                                                                                            // 画像データ削除
+                                                                                                                                                                                                                                                                                                                                                                                document.getElementById("imageInput").value = "";
+                                                                                                                                                                                                                                                                                                                                                                                                };
+                                                                                                                                                                                                                                                                                                                                                                                                                img.src = e.target.result;
+                                                                                                                                                                                                                                                                                                                                                                                                                            };
+                                                                                                                                                                                                                                                                                                                                                                                                                                        reader.readAsDataURL(file);
+                                                                                                                                                                                                                                                                                                                                                                                                                                                });
+                                                                                                                                                                                                                                                                                                                                                                                                                                                    </script>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                    </body>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                    </html>
